@@ -18,7 +18,6 @@ $.widget('ui.slideDownStream', {
         slideDownSpeed: 300,
         intervalTime: 200,
         autoStart: true,
-        initList: null,
         startHandler: function() {},
         waitHandler: function() {},
         addHandler: function() {},
