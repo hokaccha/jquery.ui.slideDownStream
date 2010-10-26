@@ -8,7 +8,7 @@ container.slideDownStream({
 });
 
 var s = container.data('slideDownStream');
-s.add_queue( $('#push_list').find('li') );
+s.push_queue( $('#push_list').find('li') );
 
 test("basic", function() {
     ok('slideDownStream' in container, 'container has slideDownStream');

@@ -15,14 +15,11 @@ $.widget('ui.slideDownStream', {
     _state: 'stop',
 
     options: {
-        slideDownSpeed: 300,
+        slideDownSpeed: 200,
         intervalTime: 200,
         autoStart: true,
-        startHandler: function() {},
-        waitHandler: function() {},
-        addHandler: function() {},
-        pushHandler: function() {},
-        stopHandler: function() {}
+        pushQueueHandler: null,
+        insertHandler: null
     },
 
     _init: function() {
@@ -31,58 +28,51 @@ $.widget('ui.slideDownStream', {
         if (self.options.autoStart) {
             self._state = 'wait';
         }
-        
-        return self;
     },
-    add_queue: function(items) {
+    push_queue: function(items) {
         var self = this;
+        var pushQueueHandler = self.options.pushQueueHandler;
 
         items.each(function() {
             self._queue.push( $(this).hide() );
         });
-        self.options.addHandler.call(self.element);
+        if (pushQueueHandler) {
+            pushQueueHandler.call(self.element);
+        }
 
         if (self._state == 'wait') self.start();
-
-        return self;
     },
     clear_queue: function() {
         var self = this;
 
         self._queue = [];
-
-        return self;
     },
     start: function() {
         var self = this;
 
         self._state = 'process';
-        self.options.startHandler.call(self.element);
         (function loop() {
             if (self._state != 'process') return;
 
-            var item = self._queue.shift();
+            var item = self._queue.shift(),
+                insertHandler = self.options.insertHandler;
             if (item) {
                 self.element.prepend(item);
                 item.slideDown(self.options.slideDownSpeed, function() {
-                    self.options.pushHandler.call(self.element, item);
+                    if (insertHandler) {
+                        insertHandler.call(self.element, item);
+                    }
                     setTimeout(loop, self.options.intervalTime);
                 });
             }
             else {
                 self._state = 'wait';
-                self.options.waitHandler.call(self.element);
             }
         })();
-
-        return self;
     },
     stop: function() {
         var self = this;
 
         self._state = 'stop';
-        self.options.stopHandler.call(self.element);
-
-        return self;
-    },
+    }
 });
