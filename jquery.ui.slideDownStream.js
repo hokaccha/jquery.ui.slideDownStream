@@ -37,8 +37,8 @@ $.widget('ui.slideDownStream', {
     add_queue: function(items) {
         var self = this;
 
-        $.each(items, function(idx, item) {
-            self._queue.push( $(item).hide() );
+        items.each(function() {
+            self._queue.push( $(this).hide() );
         });
         self.options.addHandler.call(self.element);
 
