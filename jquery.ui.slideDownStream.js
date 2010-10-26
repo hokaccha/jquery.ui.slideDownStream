@@ -21,7 +21,8 @@ $.widget('ui.slideDownStream', {
         initList: null,
         startHandler: function() {},
         waitHandler: function() {},
-        addHandler: function() {}
+        addHandler: function() {},
+        stopHandler: function() {}
     },
 
     _init: function() {
@@ -85,6 +86,7 @@ $.widget('ui.slideDownStream', {
         var self = this;
 
         self._state = 'stop';
+        self.options.stopHandler.call(self.element);
 
         return self;
     },
