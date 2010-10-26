@@ -29,12 +29,6 @@ $.widget('ui.slideDownStream', {
     _init: function() {
         var self = this;
 
-        if (self.options.defaultList) {
-            $.each(this.options.defaultList, function(idx, item) {
-                self.element.prepend(item);
-            });
-        }
-
         if (self.options.autoStart) {
             self._state = 'wait';
         }
