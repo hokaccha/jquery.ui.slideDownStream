@@ -16,6 +16,17 @@
 </head>
 <body>
 
+<div class="controller">
+<button id="push">push queue</button>
+<button id="start">start</button>
+<button id="stop">stop</button>
+</div>
+
+<div id="debug">
+<div>queue count: <span id="queue_count"><span></div>
+<div>state: <span id="state"><span></div>
+</div>
+
 <ul id="container"></ul>
 
 <script src="../lib/jquery-1.4.2.min.js"></script>
@@ -23,10 +34,26 @@
 <script src="../lib/qunit.js"></script>
 <script src="../jquery.ui.slideDownStream.js"></script>
 <script>
-var ul = $('#container').slideDownStream();
-setInterval(function() {
-    ul.slideDownStream('push_queue', $('<li>'));
-}, 500);
+
+var sds = $('#container').slideDownStream({
+    autoStart: false,
+    pushQueueHandler: function() { queue_count_box.text(this.queue.length) },
+    insertHandler: function() { queue_count_box.text(this.queue.length) },
+    stateChangeHandler: function() { state_box.text(this.state) },
+}).data('slideDownStream');
+
+var queue_count_box = $('#queue_count').text(sds.queue.length);
+var state_box = $('#state').text(sds.state);
+
+$('#push').click(function() {
+    sds.push_queue($('<li>'));
+});
+$('#start').click(function() {
+    sds.start();
+});
+$('#stop').click(function() {
+    sds.stop();
+});
 </script>
 </body>
 </html>
