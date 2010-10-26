@@ -22,6 +22,7 @@ $.widget('ui.slideDownStream', {
         startHandler: function() {},
         waitHandler: function() {},
         addHandler: function() {},
+        pushHandler: function() {},
         stopHandler: function() {}
     },
 
@@ -40,12 +41,13 @@ $.widget('ui.slideDownStream', {
         
         return self;
     },
-    push_queue: function(items) {
+    add_queue: function(items) {
         var self = this;
 
         $.each(items, function(idx, item) {
             self._queue.push( $(item).hide() );
         });
+        self.options.addHandler.call(self.element);
 
         if (self._state == 'wait') self.start();
 
@@ -70,7 +72,7 @@ $.widget('ui.slideDownStream', {
             if (item) {
                 self.element.prepend(item);
                 item.slideDown(self.options.slideDownSpeed, function() {
-                    self.options.addHandler.call(self.element, item);
+                    self.options.pushHandler.call(self.element, item);
                     setTimeout(loop, self.options.intervalTime);
                 });
             }

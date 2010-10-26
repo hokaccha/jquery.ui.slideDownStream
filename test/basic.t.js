@@ -3,13 +3,13 @@ var fixture = $('#qunit-fixture');
 
 container.slideDownStream({
     defaultList: $('#default_list').find('li'),
-    addHandler: function() {},
+    pushHandler: function() {},
     waitHandler: function() {},
     autoStart: false
 });
 
 var s = container.data('slideDownStream');
-s.push_queue( $('#push_list').find('li') );
+s.add_queue( $('#push_list').find('li') );
 
 test("basic", function() {
     ok('slideDownStream' in container, 'container has slideDownStream');
