@@ -34,8 +34,8 @@ $.widget('ui.slideDownStream', {
         var self = this;
         var pushQueueHandler = self.options.pushQueueHandler;
 
-        items.each(function() {
-            self.queue.push( $(this).hide() );
+        $.each(items, function(idx, item) {
+            self.queue.push( $(item).hide() );
         });
         if (pushQueueHandler) {
             pushQueueHandler.call(self);
