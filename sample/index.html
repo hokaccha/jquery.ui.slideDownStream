@@ -4,18 +4,31 @@
 <meta charset="utf-8">
 <title>Sample - jquery.ui.slideDownStream</title>
 <style>
+#container {
+    height: 400px;
+    overflow: hidden;
+    border: 1px solid #000;
+}
 #container li {
     background: #DDD;
     border: 1px solid #999;
     list-style: none;
-    margin: 20px 0;
+    margin: 10px 0;
     width: 300px;
-    height: 100px;
+    height: 80px;
+}
+#source pre {
+    border: 1px solid #000;
+    padding: 10px;
 }
 </style>
 </head>
 <body>
 
+<h1>jquery.ui.slideDownStream</h1>
+
+<section id="demo">
+<h2>demo</h2>
 <div class="controller">
 <button id="push">push queue</button>
 <button id="start">start</button>
@@ -28,25 +41,60 @@
 </div>
 
 <ul id="container"></ul>
+</section>
+
+<section id="source">
+<h2>source</h2>
+<pre><code>var container = $('#container').slideDownStream({
+    autoStart: false,
+});
+var sds = container.data('slideDownStream');
+
+var queue_count_box = $('#queue_count').text(sds.queue.length);
+var state_box = $('#state').text(sds.state);
+
+container.bind('sdstream.insert', function() {
+    queue_count_box.text( sds.queue.length );
+});
+container.bind('sdstream.statechange', function() {
+    state_box.text( sds.state );
+});
+
+$('#push').click(function() {
+    sds.pushQueue($('&lt;li&gt;'));
+    queue_count_box.text( sds.queue.length );
+});
+$('#start').click(function() {
+    sds.start();
+});
+$('#stop').click(function() {
+    sds.stop();
+});</code></pre>
+</section>
 
 <script src="../lib/jquery-1.4.2.min.js"></script>
 <script src="../lib/jquery-ui-1.8.5.custom.min.js"></script>
 <script src="../lib/qunit.js"></script>
 <script src="../jquery.ui.slideDownStream.js"></script>
 <script>
-
-var sds = $('#container').slideDownStream({
+var container = $('#container').slideDownStream({
     autoStart: false,
-    pushQueueHandler: function() { queue_count_box.text(this.queue.length) },
-    insertHandler: function() { queue_count_box.text(this.queue.length) },
-    stateChangeHandler: function() { state_box.text(this.state) },
-}).data('slideDownStream');
+});
+var sds = container.data('slideDownStream');
 
 var queue_count_box = $('#queue_count').text(sds.queue.length);
 var state_box = $('#state').text(sds.state);
 
+container.bind('sdstream.insert', function() {
+    queue_count_box.text( sds.queue.length );
+});
+container.bind('sdstream.statechange', function() {
+    state_box.text( sds.state );
+});
+
 $('#push').click(function() {
-    sds.push_queue($('<li>'));
+    sds.pushQueue($('<li>'));
+    queue_count_box.text( sds.queue.length );
 });
 $('#start').click(function() {
     sds.start();

@@ -10,6 +10,8 @@
  *
  */
 
+(function($) {
+
 $.widget('ui.slideDownStream', {
     queue: [],
     state: 'stop',
@@ -17,33 +19,28 @@ $.widget('ui.slideDownStream', {
     options: {
         slideDownSpeed: 200,
         intervalTime: 200,
-        autoStart: true,
-        pushQueueHandler: null,
-        insertHandler: null,
-        stateChangeHandler: null,
+        autoStart: true
     },
 
     _init: function() {
         var self = this;
 
+        self.widgetEventPrefix = 'sdstream.';
+
         if (self.options.autoStart) {
             self._change_state('wait');
         }
     },
-    push_queue: function(items) {
+    pushQueue: function(items) {
         var self = this;
-        var pushQueueHandler = self.options.pushQueueHandler;
 
         $.each(items, function(idx, item) {
             self.queue.push( $(item).hide() );
         });
-        if (pushQueueHandler) {
-            pushQueueHandler.call(self);
-        }
 
         if (self.state == 'wait') self.start();
     },
-    clear_queue: function() {
+    clearQueue: function() {
         var self = this;
 
         self.queue = [];
@@ -55,14 +52,11 @@ $.widget('ui.slideDownStream', {
         (function loop() {
             if (self.state != 'process') return;
 
-            var item = self.queue.shift(),
-                insertHandler = self.options.insertHandler;
+            var item = self.queue.shift();
             if (item) {
                 self.element.prepend(item);
                 item.slideDown(self.options.slideDownSpeed, function() {
-                    if (insertHandler) {
-                        insertHandler.call(self, item);
-                    }
+                    self._trigger('insert');
                     setTimeout(loop, self.options.intervalTime);
                 });
             }
@@ -78,11 +72,10 @@ $.widget('ui.slideDownStream', {
     },
     _change_state: function(state) {
         var self = this;
-        var stateChangeHandler = self.options.stateChangeHandler;
 
         self.state = state;
-        if (stateChangeHandler) {
-            stateChangeHandler.call(self);
-        }
+        self._trigger('statechange');
     }
 });
+
+})(jQuery);
