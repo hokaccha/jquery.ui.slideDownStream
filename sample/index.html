@@ -8,12 +8,14 @@
     height: 400px;
     overflow: hidden;
     border: 1px solid #000;
+    padding: 10px 20px;
+    margin: 0;
 }
 #container li {
     background: #DDD;
     border: 1px solid #999;
     list-style: none;
-    margin: 10px 0;
+    margin: 10px;
     width: 300px;
     font-size: 40px;
     padding: 10px;
@@ -28,7 +30,7 @@
 </head>
 <body>
 
-<h1>jquery.ui.slideDownStream</h1>
+<h1>jquery.ui.slidedownstream</h1>
 
 <section id="demo">
 <h2>demo</h2>
@@ -39,8 +41,8 @@
 </div>
 
 <div id="debug">
-<div>queue count: <span id="queue_count"><span></div>
-<div>state: <span id="state"><span></div>
+<div>queue count: <span id="queue_count"></span></div>
+<div>state: <span id="state"></span></div>
 </div>
 
 <ul id="container"></ul>
@@ -48,11 +50,11 @@
 
 <section id="source">
 <h2>source</h2>
-<pre><code>var container = $('#container').slideDownStream({
-    slideDownSpeed: 150,
-    intervalTime: 300
+<pre><code>var container = $('#container').slidedownstream({
+    slidedownspeed: 300,
+    intervaltime: 300
 });
-var sds = container.data('slideDownStream');
+var sds = container.data('slidedownstream');
 
 var queue_count_box = $('#queue_count').text(sds.queue.length);
 var state_box = $('#state').text(sds.state);
@@ -65,7 +67,7 @@ container.bind('sdstream.statechange', function() {
 });
 
 $('#push').click(function() {
-    sds.pushQueue($('&lt;li&gt;'));
+    sds.pushqueue($('&lt;li&gt;'));
     queue_count_box.text( sds.queue.length );
 });
 $('#start').click(function() {
@@ -77,8 +79,8 @@ $('#stop').click(function() {
 </section>
 
 <section id="reps">
-<h2>Repos</h2>
-<p><a href="http://github.com/hokaccha/jquery.ui.slideDownStream">hokaccha&apos;s jquery.ui.slideDownStream at master - GitHub</a></p>
+<h2>repos</h2>
+<p><a href="http://github.com/hokaccha/jquery.ui.slidedownstream">hokaccha&apos;s jquery.ui.slidedownstream at master - github</a></p>
 </section>
 <script src="../lib/jquery-1.4.2.min.js"></script>
 <script src="../lib/jquery-ui-1.8.5.custom.min.js"></script>
@@ -86,14 +88,18 @@ $('#stop').click(function() {
 <script src="../jquery.ui.slideDownStream.js"></script>
 <script>
 var container = $('#container').slideDownStream({
-    slideDownSpeed: 150,
+    slideDownSpeed: 300,
     intervalTime: 300
 });
 var sds = container.data('slideDownStream');
 
+try {
 var queue_count_box = $('#queue_count').text(sds.queue.length);
 var state_box = $('#state').text(sds.state);
-var i = 0;
+}
+catch(e) {
+    consol.log(e);
+}
 
 container.bind('sdstream.insert', function() {
     queue_count_box.text( sds.queue.length );
@@ -102,6 +108,7 @@ container.bind('sdstream.statechange', function() {
     state_box.text( sds.state );
 });
 
+var i = 0;
 $('#push').click(function() {
     sds.pushQueue($('<li>').text(i++));
     queue_count_box.text( sds.queue.length );
