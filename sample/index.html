@@ -48,7 +48,10 @@
 
 <section id="source">
 <h2>source</h2>
-<pre><code>var container = $('#container').slideDownStream();
+<pre><code>var container = $('#container').slideDownStream({
+    slideDownSpeed: 150,
+    intervalTime: 300
+});
 var sds = container.data('slideDownStream');
 
 var queue_count_box = $('#queue_count').text(sds.queue.length);
@@ -78,7 +81,10 @@ $('#stop').click(function() {
 <script src="../lib/qunit.js"></script>
 <script src="../jquery.ui.slideDownStream.js"></script>
 <script>
-var container = $('#container').slideDownStream();
+var container = $('#container').slideDownStream({
+    slideDownSpeed: 150,
+    intervalTime: 300
+});
 var sds = container.data('slideDownStream');
 
 var queue_count_box = $('#queue_count').text(sds.queue.length);
