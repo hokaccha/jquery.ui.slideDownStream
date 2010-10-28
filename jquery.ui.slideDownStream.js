@@ -19,7 +19,7 @@ $.widget('ui.slideDownStream', {
     options: {
         slideDownSpeed: 200,
         intervalTime: 200,
-        autoStart: true
+        autoStart: false
     },
 
     _init: function() {
