@@ -93,13 +93,8 @@ var container = $('#container').slideDownStream({
 });
 var sds = container.data('slideDownStream');
 
-try {
 var queue_count_box = $('#queue_count').text(sds.queue.length);
 var state_box = $('#state').text(sds.state);
-}
-catch(e) {
-    consol.log(e);
-}
 
 container.bind('sdstream.insert', function() {
     queue_count_box.text( sds.queue.length );
