@@ -15,7 +15,10 @@
     list-style: none;
     margin: 10px 0;
     width: 300px;
-    height: 80px;
+    font-size: 40px;
+    padding: 10px;
+    text-align: center;
+    color: #999;
 }
 #source pre {
     border: 1px solid #000;
@@ -84,6 +87,7 @@ var sds = container.data('slideDownStream');
 
 var queue_count_box = $('#queue_count').text(sds.queue.length);
 var state_box = $('#state').text(sds.state);
+var i = 0;
 
 container.bind('sdstream.insert', function() {
     queue_count_box.text( sds.queue.length );
@@ -93,7 +97,7 @@ container.bind('sdstream.statechange', function() {
 });
 
 $('#push').click(function() {
-    sds.pushQueue($('<li>'));
+    sds.pushQueue($('<li>').text(i++));
     queue_count_box.text( sds.queue.length );
 });
 $('#start').click(function() {
