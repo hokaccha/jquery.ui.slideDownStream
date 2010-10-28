@@ -4,22 +4,22 @@
 
 This is jQuery Plugin using $.widget. slideDown animation is added to queue and it processes it sequentially.
 
-demo site url:
-https://dl.dropbox.com/u/336104/js/jquery-ui-slideDownStream/sample/index.html
+demo site url: 
+[https://dl.dropbox.com/u/336104/js/jquery-ui-slideDownStream/sample/index.html](https://dl.dropbox.com/u/336104/js/jquery-ui-slideDownStream/sample/index.html)
 
 ## options
 
 ### slideDownSpeed
 
-Slide down animation speed. Same as second argument of jQuery.slideDown.
+Slide down animation speed. Same as second argument of jQuery.slideDown. default value is 200.
 
 ### intervalTime
 
-Waiting time until the following element is added.
+Waiting time until the following element is added. default value is 200
 
 ### autoStart
 
-if this option is true, start state is wait. default is false.
+if this option is true, start state is wait. default is false. default value is false.
 
 ## event
 
